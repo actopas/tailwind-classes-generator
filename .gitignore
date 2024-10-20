@@ -25,10 +25,12 @@ Thumbs.db
 # Tailwind CSS output
 output.css
 
-
 # Logs
 *.log
 
 # Temporary files
 *.tmp
 *.temp
+
+# ignore auto generated json file
+output.min.json
