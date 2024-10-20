@@ -18,8 +18,8 @@ This project provides a set of scripts to generate, analyze, and convert all Tai
 1. Clone this repository:
 
    ```
-   git clone [https://github.com/actopas/generate-all-tailwind-classes.git]
-   cd [generate-all-tailwind-classes]
+   git clone [https://github.com/actopas/tailwind-classes-generator.git]
+   cd [tailwind-classes-generator]
    ```
 
 2. Install the dependencies:
