@@ -38,14 +38,17 @@ function cssToObjectArray(filePath) {
         // deal with escaped colons and backslashes
         className = className.replace(/\\:/g, ":").replace(/\\/g, "");
 
-        // remove :not([hidden])~:not([hidden]) suffix
+        // remove >:not([hidden])~:not([hidden]) suffix
+        className = className.replace(
+          />:not\(\[hidden\]\)~:not\(\[hidden\]\)$/,
+          ""
+        );
+
+        // if there's still a separate :not([hidden])~:not([hidden]) suffix, remove it
         className = className.replace(
           /:not\(\[hidden\]\)~:not\(\[hidden\]\)$/,
           ""
         );
-
-        // remove > prefix
-        className = className.replace(/^>/, "");
 
         // remove ::-moz-placeholder and ::placeholder suffix
         const baseClassName = className
