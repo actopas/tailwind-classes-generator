@@ -16,6 +16,7 @@ function cssToObjectArray(filePath) {
   // match class selectors and their properties, support multi-line
   const classRegex = /([^{}]+)\s*{\s*([^{}]+)\s*}/g;
   const cssArray = [];
+  const processedClasses = new Set(); // track processed class names
 
   let match;
   while ((match = classRegex.exec(cssContent)) !== null) {
@@ -35,6 +36,16 @@ function cssToObjectArray(filePath) {
         let className = selector.startsWith(".") ? selector.slice(1) : selector;
         className = className.replace(/\\:/g, ":").replace(/\\/g, "");
 
+        // remove ::-moz-placeholder and ::placeholder suffix
+        const baseClassName = className
+          .replace(/::?-moz-placeholder$/, "")
+          .replace(/::placeholder$/, "");
+
+        // if the base class name has been processed, skip it
+        if (processedClasses.has(baseClassName)) {
+          return;
+        }
+
         const propsString = properties
           .split(";")
           .map((prop) => {
@@ -45,7 +56,8 @@ function cssToObjectArray(filePath) {
           .join(";");
 
         if (propsString) {
-          cssArray.push({ c: className, p: propsString });
+          cssArray.push({ c: baseClassName, p: propsString });
+          processedClasses.add(baseClassName); // record processed class names
         }
       }
     });
