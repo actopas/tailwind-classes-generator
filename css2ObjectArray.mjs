@@ -34,7 +34,18 @@ function cssToObjectArray(filePath) {
         selector.startsWith("::")
       ) {
         let className = selector.startsWith(".") ? selector.slice(1) : selector;
+
+        // deal with escaped colons and backslashes
         className = className.replace(/\\:/g, ":").replace(/\\/g, "");
+
+        // remove :not([hidden])~:not([hidden]) suffix
+        className = className.replace(
+          /:not\(\[hidden\]\)~:not\(\[hidden\]\)$/,
+          ""
+        );
+
+        // remove > prefix
+        className = className.replace(/^>/, "");
 
         // remove ::-moz-placeholder and ::placeholder suffix
         const baseClassName = className
